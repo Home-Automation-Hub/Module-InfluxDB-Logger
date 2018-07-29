@@ -1,0 +1,37 @@
+{% extends "influxdb_logger/base.html" %}
+
+{% block card_content %}
+<div id="metrics-form">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>MQTT Topic</th>
+                <th>InfluxDB Database</th>
+                <th>Measurement</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="metric-row-container">
+            {% for metric in metrics %}
+                {% if metric.isTemplate %}<script type="text/html" id="template-metric-row">{% endif %}
+                    <tr class="metric-row">
+                        <td><input type="text" class="form-control" name="topic" value="{{ metric.topic }}" required></td>
+                        <td><input type="text" class="form-control" name="database" value="{{ metric.database }}" required></td>
+                        <td><input type="text" class="form-control" name="measurement" value="{{ metric.measurement }}" required></td>
+                        <td>
+                            <button class="btn btn-danger btn-delete-metric"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                {% if metric.isTemplate %}</script>{% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-success" id="btn-add-metric">Add metric</button>
+    <button class="btn btn-primary float-right" id="btn-save-metrics">Save metrics</button>
+</div>
+
+{% endblock %}
+
+{% block module_scripts %}
+<script src="{{ module_base_path }}/static/js/metrics.js"></script>
+{% endblock %}
