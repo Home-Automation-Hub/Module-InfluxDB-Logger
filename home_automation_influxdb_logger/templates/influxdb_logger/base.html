@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block module_head %}
+<link rel="stylesheet" href="{{ module_base_path }}/static/css/influxdb_logger.css">
+{% endblock %}
+
+{% block content %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link{% if module_path_suffix=='' %} active{% endif %}" href="{{ module_base_path }}/">Welcome</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if module_path_suffix=='settings' %} active{% endif %}" href="{{ module_base_path }}/settings/">Settings</a>
+    </li>
+</ul>
+<div class="card card-tabbed">
+    <div class="card-body">       
+        {% block card_content %}{% endblock %}
+    </div>   
+</div>
+{% endblock %}
+
+{% block module_scripts %}
+{% endblock %}
