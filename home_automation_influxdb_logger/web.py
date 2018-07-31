@@ -1,6 +1,6 @@
 from home_automation_hub import web
 from flask import render_template, request, jsonify
-from . import storage
+from . import storage, control
 
 def view_index():
     return render_template("influxdb_logger/index.html")
@@ -79,6 +79,8 @@ def action_save_metrics():
     if not error:
         storage.set("metrics", metrics_validated)
         message = "Metrics saved successfully"
+
+    control.subscribe_to_all()
 
     return jsonify(success=(error==None), message=message)
     
