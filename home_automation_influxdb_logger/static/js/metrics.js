@@ -32,6 +32,7 @@ jQuery(document).ready(function() {
             metric["topic"] = jQuery(this).find("[name='topic']").val();
             metric["database"] = jQuery(this).find("[name='database']").val();
             metric["measurement"] = jQuery(this).find("[name='measurement']").val();
+            metric["type"] = jQuery(this).find("[name='type']").val();
 
             metrics.push(metric);
         });

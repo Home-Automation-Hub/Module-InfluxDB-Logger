@@ -2,10 +2,21 @@ from home_automation_hub import mqtt
 from . import storage
 mqtt_subscription_tuples = []
 
-def generate_metric_handler(database, measurement):
+type_conversion_methods = {
+    "string": lambda x: x.decode("UTF-8"),
+    "integer": lambda x: int(float(x)), # Can't directly convert bytes to int
+    "float": float,
+}
+
+def generate_metric_handler(database, measurement, type_name):
     def handler(topic, payload):
+        try:
+            payload_converted = type_conversion_methods[type_name](payload)
+        except ValueError:
+            print(f"Could not convert {payload} to type {type_name}")
+        
         print("Hello from handler for "+measurement+","+database)
-        print(f"Topic: {topic}, {payload}")
+        print(f"Topic: {topic}, {payload_converted}")
     return handler
 
 def subscribe_to_all():
@@ -19,7 +30,7 @@ def subscribe_to_all():
     metrics = storage.get("metrics")
     for metric in metrics:
         handler = generate_metric_handler(metric.get("database"),
-                metric.get("measurement"))
+                metric.get("measurement"), metric.get("type"))
         mqtt_subscription_tuples.append(mqtt.subscribe(metric.get("topic"),
                 handler))
 

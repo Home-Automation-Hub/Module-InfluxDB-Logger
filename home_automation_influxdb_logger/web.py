@@ -65,14 +65,19 @@ def action_save_metrics():
         topic = metric.get("topic")
         measurement = metric.get("measurement")
         database = metric.get("database")
+        type_name = metric.get("type")
 
         if not (topic.strip() and measurement.strip() and database.strip()):
             error = "All metrics must have a topic, measurement and database"
+
+        if type_name not in ["string", "integer", "float"]:
+            error = f"{type_name} is not a valid type"
         
         metrics_validated.append({
             "topic": topic,
             "measurement": measurement,
             "database": database,
+            "type": type_name
         })
 
     message = error
