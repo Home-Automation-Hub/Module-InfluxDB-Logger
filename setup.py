@@ -8,7 +8,7 @@ setup(
     author_email="development@camerongray.me",
     url="https://github.com/camerongray1515",
     install_requires=[
-
+        "influxdb==5.2.0"
     ],
     packages=["home_automation_influxdb_logger"],
     include_package_data=True
