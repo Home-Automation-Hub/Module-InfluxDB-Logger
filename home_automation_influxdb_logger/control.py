@@ -54,7 +54,7 @@ def subscribe_to_all():
         subscription_tuple = mqtt_subscription_tuples.pop()
         mqtt.unsubscribe(subscription_tuple)
 
-    metrics = storage.get("metrics")
+    metrics = storage.get("metrics") or []
     for metric in metrics:
         handler = generate_metric_handler(metric.get("database"),
                 metric.get("measurement"), metric.get("type"))
